@@ -30,5 +30,18 @@ body {
     width: 600px;
     height: 400px;
 
+    position: relative;
+    overflow: hidden;
+    user-select: none;
+}
 
+/* #game-screen {
+    display: none;
+} */
+
+
+#game-box {
+ background-image: url("../images/city.png");
+ background-size: cover;
+    
 }

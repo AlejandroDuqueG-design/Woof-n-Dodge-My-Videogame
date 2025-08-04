@@ -16,11 +16,7 @@ const gameBoxNode = document.querySelector("#game-box");
 
 // - ※ GLOBAL GAME VARIABLES
 
-
-
-
-
-
+let dogObj; //THis will be empty by now, cause the gamee has not started
 
 // - ※ GLOBAL GAME FUNCTIONS
 function startGame() {
@@ -31,22 +27,32 @@ function startGame() {
   gameScreenNode.style.display = "flex";
 
   //3. Adding inicial element (Dog) to the game
-const dogObj = new Dog()
-console.log (dogObj)
+  dogObj = new Dog();
+  //console.log(dogObj);
 
+  let obstacleObj = new Obstacle ()
+  console.log(obstacleObj);
+  
 
-
+  //4. Start the game loop (Interval)
   setInterval(gameLoop, Math.round(1000 / 60));
 }
 
 function gameLoop() {
   //console.log("Interval running");
+  dogObj.gravityEffect();
 }
 
 // - ※ EVENTS LISTENERS
 startBtnNode.addEventListener("click", startGame);
 
-/* Planning of the Game in JS (Different Elements, their properties and the actions they will make)
+document.addEventListener("keyDown", (event) => {
+  if (event.code === "Space" || event.code === "ArrowUp") {
+    dogObj.jump();
+  }
+});
+
+/* Planning of the Game in JS (Different} Elements, their properties and the actions they will make)
 Game ovweview: A street dog 🐶 needs to avoid obstacles that are spawing while he runs trough the city.
 The dog will also find randomly food rewards 🥩🍗🍖 that can help him to stay healthy and get some "inmuinity" while he sort out the obstacles.
 In some of this obstacles there are also food rewards.

@@ -17,7 +17,8 @@ const gameBoxNode = document.querySelector("#game-box");
 // - ※ GLOBAL GAME VARIABLES
 
 let dogObj; //THis will be empty by now, cause the gamee has not started
-let obstacleObj;
+//let obstacleObj;
+let obstacleArr = []; //let obstacleObj is commented because we need to break the code and change it for an arr, since we need multiple obstacles spawing one after the other
 
 // - ※ GLOBAL GAME FUNCTIONS
 function startGame() {
@@ -31,18 +32,44 @@ function startGame() {
   dogObj = new Dog();
   //console.log(dogObj);
 
-  obstacleObj = new Obstacle();
+  //obstacleObj = new Obstacle(); We are now going to use the recently created empty arr let obstacleArr = []
   //console.log(obstacleObj);
+  //obstacleArr.push (new Obstacle ()) //code in line 37 and 38 will be moved inside the function SpawnObstacle()
+  //console.log(obstacleArr);
 
   //4. Start the game loop (Interval)
   setInterval(gameLoop, Math.round(1000 / 60));
+
+  //5. Set up any other interval or timeout that we may need
+  setInterval(spawnObstacle, 1500);
+}
+
+function spawnObstacle() {
+  obstacleArr.push(new Obstacle());
+  //console.log(obstacleArr);
+}
+
+function checkDespawnObstacle() {
+  if (obstacleArr[0] && obstacleArr[0].x < 0) {
+    /*Destroy the obstacles once they have pass the left screen border and disappear 
+    To remove elements from the game we need to consider both enviroments, 
+     1.first from the DOM */
+    obstacleArr[0].node.remove();
+    //2. from the code
+    obstacleArr.splice(0, 1); //or shift can also be used here, if it is always to remove the first element
+  }
 }
 
 function gameLoop() {
   //console.log("Interval running");
   dogObj.gravityEffect();
   dogObj.automaticDogMovement();
-  obstacleObj.automaticObstacleMovement();
+
+  obstacleArr.forEach((eachObstacleObj) => {
+    eachObstacleObj.automaticObstacleMovement();
+  });
+
+  checkDespawnObstacle();
 }
 
 // - ※ EVENTS LISTENERS

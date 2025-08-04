@@ -1,3 +1,4 @@
+//DOG CLASS
 class Dog {
   constructor() {
     //Properties for any dog (NODE) we create, all of them inside the constructor
@@ -7,7 +8,7 @@ class Dog {
 
     gameBoxNode.append(this.node); //Appending the node to the game box
 
-    this.x = 90;
+    this.x = 70;
     this.y = 300;
     this.height = 45;
     this.width = 75;

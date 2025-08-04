@@ -17,6 +17,7 @@ const gameBoxNode = document.querySelector("#game-box");
 // - ※ GLOBAL GAME VARIABLES
 
 let dogObj; //THis will be empty by now, cause the gamee has not started
+let obstacleObj;
 
 // - ※ GLOBAL GAME FUNCTIONS
 function startGame() {
@@ -30,9 +31,8 @@ function startGame() {
   dogObj = new Dog();
   //console.log(dogObj);
 
-  let obstacleObj = new Obstacle ()
-  console.log(obstacleObj);
-  
+  obstacleObj = new Obstacle();
+  //console.log(obstacleObj);
 
   //4. Start the game loop (Interval)
   setInterval(gameLoop, Math.round(1000 / 60));
@@ -41,6 +41,8 @@ function startGame() {
 function gameLoop() {
   //console.log("Interval running");
   dogObj.gravityEffect();
+  dogObj.automaticDogMovement();
+  obstacleObj.automaticObstacleMovement();
 }
 
 // - ※ EVENTS LISTENERS

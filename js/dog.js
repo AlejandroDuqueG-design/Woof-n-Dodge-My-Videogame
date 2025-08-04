@@ -13,6 +13,7 @@ class Dog {
     this.width = 75;
     this.gravitySpeed = 1;
     this.jumpSpeed = 30;
+    this.speed = 2
 
     //Adjusting the initial dimension
     this.node.style.width = `${this.width}px`;
@@ -33,7 +34,6 @@ class Dog {
     if (this.y + this.height > gameBoxNode.offsetHeight - 100) {
       return;
     }
-
     this.y += this.gravitySpeed;
     this.node.style.top = `${this.y}px`;
   }
@@ -44,5 +44,10 @@ class Dog {
     }
     this.y -= this.jumpSpeed;
     this.node.style.top = `${this.y}px`;
+  }
+
+  automaticDogMovement() {
+    this.x += this.speed;
+    this.node.style.left = `${this.x}px`;
   }
 }

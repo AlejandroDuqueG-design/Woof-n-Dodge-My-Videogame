@@ -1,28 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Woof 'n' Dodge</title>
-    <link rel="stylesheet" href="./styles/style.css"/>
-</head>
-<body>
-    
-</body>
-</html>
-
-<!--Game Start Screen-->
-<div id="start-screen" class="container">
-    <img src="./images/logo.png" width="600" alt="logo"/>
-    <button id="start-btn">START</button>
-</div>
-
-<!--Game Screen Background-->
-<div id= "game-screen" class= "container">
-    <!--<img src="./images/city.png" width="800" alt="city"/>-->
-    <div id="game-box">
+    <link rel="stylesheet" href="./styles/style.css" />
+  </head>
+  <body>
+    <!--Game Start Screen-->
+    <div id="start-screen" class="container">
+      <img src="./images/logo.png" width="600" alt="logo" />
+      <button id="start-btn">START</button>
     </div>
-</div>
 
-
-
+    <!--Game Screen Background-->
+    <div id="game-screen" class="container">
+      <!-- It is here where addional elements like: life counter, reward system, elements, animation, collisions, etc. can be added, NOT IN GAME BOX -->
+      <!--<img src="./images/city.png" width="800" alt="city"/  //Image was added at CSS level>-->
+      <div id="game-box"></div>
+    </div>
+    <script src="/js/dog.js"></script>
+    <script src="./js/main.js"></script>
+  </body>
+</html>

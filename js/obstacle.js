@@ -4,11 +4,11 @@ class Obstacle {
     //Properties of any obstacle (NODE) we will create
     this.node = document.createElement("img");
     this.node.className = "obstacle";
-    this.node.src = "./images/firering.png";
+    this.node.src = "./images/ring.png";
 
     gameBoxNode.append(this.node); //Appending the node to the game box
 
-    this.x = 600;
+    this.x = gameBoxNode.offsetWidth; //The obstacle will disapperar in the game box left border
     this.y = 190;
     this.height = 110;
     this.width = 50;

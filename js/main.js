@@ -50,7 +50,7 @@ function spawnObstacle() {
 }
 
 function checkDespawnObstacle() {
-  if (obstacleArr[0] && obstacleArr[0].x < 0) {
+  if (obstacleArr[0] && obstacleArr[0].x < 0 - obstacleArr[0].width) {
     /*Destroy the obstacles once they have pass the left screen border and disappear 
     To remove elements from the game we need to consider both enviroments, 
      1.first from the DOM */
@@ -63,19 +63,20 @@ function checkDespawnObstacle() {
 function gameLoop() {
   //console.log("Interval running");
   dogObj.gravityEffect();
-  dogObj.automaticDogMovement();
+  //dogObj.automaticDogMovement();
 
   obstacleArr.forEach((eachObstacleObj) => {
     eachObstacleObj.automaticObstacleMovement();
   });
 
   checkDespawnObstacle();
+  console.log(dogObj.y)
 }
 
 // - ※ EVENTS LISTENERS
 startBtnNode.addEventListener("click", startGame);
-
-document.addEventListener("keyDown", (event) => {
+//Keydown = Any key in the keyboard
+document.addEventListener("keydown", (event) => {
   if (event.code === "Space" || event.code === "ArrowUp") {
     dogObj.jump();
   }

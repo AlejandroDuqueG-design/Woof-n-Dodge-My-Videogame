@@ -12,8 +12,8 @@ class Dog {
     this.y = 300;
     this.height = 45;
     this.width = 75;
-    this.gravitySpeed = 1;
-    this.jumpSpeed = 30;
+    this.gravitySpeed = 3;
+    this.jumpSpeed = 60;
     this.speed = 2
 
     //Adjusting the initial dimension
@@ -32,17 +32,16 @@ class Dog {
 
   gravityEffect() {
     //This will avoid that the dog crosses the screen bottom limit
-    if (this.y + this.height > gameBoxNode.offsetHeight - 100) {
+    if (this.y + this.height + this.gravitySpeed > gameBoxNode.offsetHeight - 55) {
+      
       return;
     }
     this.y += this.gravitySpeed;
+    console.log (this.y)
     this.node.style.top = `${this.y}px`;
   }
   jump() {
-    if (this.y < 0) {
-      //If the dog is above the top of the screen
-      return; //Break the function
-    }
+    //if (this.y === 300)
     this.y -= this.jumpSpeed;
     this.node.style.top = `${this.y}px`;
   }

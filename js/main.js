@@ -41,11 +41,17 @@ function startGame() {
   setInterval(gameLoop, Math.round(1000 / 60));
 
   //5. Set up any other interval or timeout that we may need
-  setInterval(spawnObstacle, 1500);
+  setInterval(spawnObstacle, 2000);
 }
 
 function spawnObstacle() {
-  obstacleArr.push(new Obstacle());
+
+  let obstacleTop = new Obstacle("bottom", 600, 190);
+  obstacleArr.push(obstacleTop);
+
+  let obstacleBottom = new Obstacle("top", 1000, 130);
+  obstacleArr.push(obstacleBottom);
+
   //console.log(obstacleArr);
 }
 
@@ -70,7 +76,6 @@ function gameLoop() {
   });
 
   checkDespawnObstacle();
-  console.log(dogObj.y)
 }
 
 // - ※ EVENTS LISTENERS

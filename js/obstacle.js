@@ -1,6 +1,6 @@
 //SAME PROCESS AS WITH THE DOG CLASS
 class Obstacle {
-  constructor() {
+  constructor(type, xPos, yPos) {
     //Properties of any obstacle (NODE) we will create
     this.node = document.createElement("img");
     this.node.className = "obstacle";
@@ -8,13 +8,14 @@ class Obstacle {
 
     gameBoxNode.append(this.node); //Appending the node to the game box
 
-    this.x = gameBoxNode.offsetWidth; //The obstacle will disapperar in the game box left border
-    this.y = 190;
-    this.height = 110;
+    this.x = xPos; //The obstacle will disapperar in the game box left border
+    this.y = yPos
+    this.height = 100;
     this.width = 50;
     this.gravitySpeed = 1;
     this.jumpSpeed = 30;
     this.speed = 2;
+    //this.type = type //This will allow to know the type of element even inside methods
 
     //Adjusting the initial dimension
     this.node.style.width = `${this.width}px`;

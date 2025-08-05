@@ -12,9 +12,9 @@ class Dog {
     this.y = 300;
     this.height = 45;
     this.width = 75;
-    this.gravitySpeed = 3;
+    this.gravitySpeed = 2;
     this.jumpSpeed = 60;
-    this.speed = 2
+    this.speed = 1;
 
     //Adjusting the initial dimension
     this.node.style.width = `${this.width}px`;
@@ -31,13 +31,15 @@ class Dog {
   //Here are all the methods for the actions that the element (dog), will do
 
   gravityEffect() {
-    //This will avoid that the dog crosses the screen bottom limit
+    //1.This will avoid that the dog crosses the screen bottom limit that was set up in 300px
+    //2. gameBoxNode.offsetHeight - 55 will locate the dog in his initial position
+    //3. Also, with this conditional we are checking if the sumatory of coordinate y, dog height and gravity speed are higher than gameBoxNode.offsetHeight - 55 that will mean, return anything
+    
     if (this.y + this.height + this.gravitySpeed > gameBoxNode.offsetHeight - 55) {
-      
       return;
     }
     this.y += this.gravitySpeed;
-    console.log (this.y)
+    console.log(this.y);
     this.node.style.top = `${this.y}px`;
   }
   jump() {

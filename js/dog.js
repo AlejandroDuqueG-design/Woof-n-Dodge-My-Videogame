@@ -26,6 +26,8 @@ class Dog {
     this.node.style.left = `${this.x}px`;
 
     //Adjusting speed movement properties
+
+    this.isGround = true; //The Dog is in the ground
   }
 
   //Here are all the methods for the actions that the element (dog), will do
@@ -34,18 +36,21 @@ class Dog {
     //1.This will avoid that the dog crosses the screen bottom limit that was set up in 300px
     //2. gameBoxNode.offsetHeight - 55 will locate the dog in his initial position
     //3. Also, with this conditional we are checking if the sumatory of coordinate y, dog height and gravity speed are higher than gameBoxNode.offsetHeight - 55 that will mean, return anything
-    
+
     if (this.y + this.height + this.gravitySpeed > gameBoxNode.offsetHeight - 55) {
+      this.isGround = true
       return;
     }
     this.y += this.gravitySpeed;
-    console.log(this.y);
     this.node.style.top = `${this.y}px`;
   }
   jump() {
-    //if (this.y === 300)
-    this.y -= this.jumpSpeed;
-    this.node.style.top = `${this.y}px`;
+    if (this.isGround) {
+      this.y -= this.jumpSpeed;
+      this.node.style.top = `${this.y}px`;
+
+      this.isGround = false
+    }
   }
 
   automaticDogMovement() {

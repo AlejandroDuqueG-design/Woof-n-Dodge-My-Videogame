@@ -20,6 +20,13 @@ let dogObj; //THis will be empty by now, cause the gamee has not started
 //let obstacleObj;
 let obstacleArr = []; //let obstacleObj is commented because we need to break the code and change it for an arr, since we need multiple obstacles spawing one after the other
 
+let obstacleSpawnFrequency = 3000;
+
+let gameIntervalId;
+let obstacleSpawnIntervalId;
+
+let lifeCounter = 0;
+
 // - ※ GLOBAL GAME FUNCTIONS
 function startGame() {
   //1. Hiding the start game screen when btn click
@@ -38,18 +45,20 @@ function startGame() {
   //console.log(obstacleArr);
 
   //4. Start the game loop (Interval)
-  setInterval(gameLoop, Math.round(1000 / 60));
+  gameIntervalId = setInterval(gameLoop, Math.round(1000 / 60));
 
   //5. Set up any other interval or timeout that we may need
-  setInterval(spawnObstacle, 2000);
+  obstacleSpawnIntervalId = setInterval(spawnObstacle, obstacleSpawnFrequency);
 }
 
 function spawnObstacle() {
+  //Variable to control how the obstacles spawn randomly
+  //let randomPosYTop = Math.floor(Math.random() * - 110)//Random number between -100 and 0
 
-  let obstacleTop = new Obstacle("bottom", 600, 190);
+  let obstacleTop = new Obstacle(610, 190); //This have the same oder as in the constructor parameters;
   obstacleArr.push(obstacleTop);
 
-  let obstacleBottom = new Obstacle("top", 1000, 130);
+  let obstacleBottom = new Obstacle(770, 130); //This have the same oder as in the constructor parameters;
   obstacleArr.push(obstacleBottom);
 
   //console.log(obstacleArr);
@@ -63,29 +72,78 @@ function checkDespawnObstacle() {
     obstacleArr[0].node.remove();
     //2. from the code
     obstacleArr.splice(0, 1); //or shift can also be used here, if it is always to remove the first element
+
+    lifeCounter += 0.5;
   }
 }
-
+let count = 0;
 function gameLoop() {
-  //console.log("Interval running");
+  count++;
   dogObj.gravityEffect();
   //dogObj.automaticDogMovement();
-
+          
   obstacleArr.forEach((eachObstacleObj) => {
     eachObstacleObj.automaticObstacleMovement();
   });
 
   checkDespawnObstacle();
+  checkCollisionDogObstacle();
+}
+
+function handleDogJump(event) {
+  if (event.code === "Space" || event.code === "ArrowUp") {
+    dogObj.jump(); //This function was created as a good practice, better to have the event organized in a function
+  }
+}
+
+function gameOver() {
+  //Inside this function we need:
+
+  //1. Clear ALL Intervals and timeouts
+  clearInterval(gameIntervalId);
+  clearInterval(obstacleSpawnIntervalId);
+
+  //2. Hide the game screen.
+  gameScreenNode.style.display = "none";
+
+  //3. Make the gam over screen appears
+  gameOverScreenNode.style.display = "flex";
+
+  //4. We need to CLEAR the game (removing all nodes and restarting all variables)
+}
+
+function checkCollisionDogObstacle() {
+  //We need to first iterate over the arr
+  obstacleArr.forEach((eachObstacleObj) => {
+    let isColliding = checkCollision(dogObj, eachObstacleObj);
+    
+    //console.log(isColliding);
+    if (isColliding) {
+      gameOver();
+    }
+  });
+}
+
+function checkCollision(element1, element2) {
+  
+  if (// Axis-Aligned Bounding Boxes (AABBs) Mathematic comprobation very typical for this kind of cases
+    element1.x < element2.x + element2.width &&
+    element1.x + element1.width > element2.x &&
+    element1.y < element2.y + element2.height &&
+    element1.y + element1.height > element2.y
+  ) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 // - ※ EVENTS LISTENERS
 startBtnNode.addEventListener("click", startGame);
 //Keydown = Any key in the keyboard
-document.addEventListener("keydown", (event) => {
-  if (event.code === "Space" || event.code === "ArrowUp") {
-    dogObj.jump();
-  }
-});
+document.addEventListener("keydown", handleDogJump);
+
+startGame();
 
 /* Planning of the Game in JS (Different} Elements, their properties and the actions they will make)
 Game ovweview: A street dog 🐶 needs to avoid obstacles that are spawing while he runs trough the city.

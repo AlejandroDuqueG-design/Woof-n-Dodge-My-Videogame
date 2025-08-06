@@ -27,7 +27,6 @@ let obstacleSpawnIntervalId;
 
 let lifeCounter = 0;
 
-
 // - ※ GLOBAL GAME FUNCTIONS
 function startGame() {
   //1. Hiding the start game screen when btn click
@@ -38,10 +37,8 @@ function startGame() {
 
   //3. Adding inicial element (Dog) to the game
   dogObj = new Dog();
-  //console.log(dogObj);
 
   //obstacleObj = new Obstacle(); We are now going to use the recently created empty arr let obstacleArr = []
-  //console.log(obstacleObj);
   //obstacleArr.push (new Obstacle ()) //code in line 37 and 38 will be moved inside the function SpawnObstacle()
   //console.log(obstacleArr);
 
@@ -53,17 +50,33 @@ function startGame() {
 }
 
 function spawnObstacle() {
-let controlRingY = "number between 135px and 235px"  
-  //Variable to control how the obstacles spawn randomly
-  
-  let randomPosYring = Math.floor(Math.random() *  235)//Random number between -100 and 0
+  //Variable to control how the obstacles spawn randomly at a different height for the ring
+  let randomPosYring = Math.floor(Math.random() * 100) + 100; //Random number between 100 y 200 (Multiplied by 100 and then adding 100)
 
-  let obstacleTop = new Obstacle("dogcatcher", gameBoxNode.offsetWidth, 235); //This have the same oder ("type", xPos, yPos) as in the constructor parameters;
-  obstacleArr.push(obstacleTop);
+  // Generar un numero aleatorio entre 0 y 3
+  // 1. Condicional para determinar como van a aparecer los elementos:
+  // - Si el número es 0, no pasa nada,
+  // - Si el número es 1, aparece solo el enemigo,
+  // - Si el número es 2 aparece solo el aro y
+  // - Si el número es 3 aparecen ambos
+  // 2. X va a ser la misma para ambos obstacles
 
-  let obstacleBottom = new Obstacle("ring", 770, randomPosYring); //This have the same oder ("type", xPos, yPOs) as in the constructor parameters;
-  obstacleArr.push(obstacleBottom);
-
+  let randomNumber = Math.round(Math.random() * 3);
+  console.log(randomNumber);
+  if (randomNumber === 0) {
+    return;
+  } else if (randomNumber === 1) {
+    let dogCatcher = new Obstacle("dogcatcher", gameBoxNode.offsetWidth, 235); //This have the same oder ("type", xPos, yPos) as in the constructor parameters;
+    obstacleArr.push(dogCatcher);
+  } else if (randomNumber === 2) {
+    let ring = new Obstacle("ring", gameBoxNode.offsetWidth, randomPosYring); //This have the same oder ("type", xPos, yPOs) as in the constructor parameters;
+    obstacleArr.push(ring);
+  } else if (randomNumber === 3) {
+    let dogCatcher = new Obstacle("dogcatcher", gameBoxNode.offsetWidth, 235); //This have the same oder ("type", xPos, yPos) as in the constructor parameters;
+    obstacleArr.push(dogCatcher);
+    let ring = new Obstacle("ring", gameBoxNode.offsetWidth, randomPosYring - 20); //This have the same oder ("type", xPos, yPOs) as in the constructor parameters;
+    obstacleArr.push(ring);
+  }
   //console.log(obstacleArr);
 }
 
@@ -75,23 +88,19 @@ function checkDespawnObstacle() {
     obstacleArr[0].node.remove();
     //2. from the code
     obstacleArr.splice(0, 1); //or shift can also be used here, if it is always to remove the first element
-
-    lifeCounter += 0.5;
   }
 }
 
-let count = 0;
-
 function gameLoop() {
-  count++;
+  //count++;
   dogObj.gravityEffect();
-  
+
   obstacleArr.forEach((eachObstacleObj) => {
     eachObstacleObj.automaticObstacleMovement();
-  });
+  });  
 
   checkDespawnObstacle();
-  checkCollisionDogObstacle();
+  //checkCollisionDogObstacle();
 }
 
 function handleDogJump(event) {
@@ -150,27 +159,21 @@ function checkCollisionWithTopBottomZones(element1, element2, topPercent, bottom
     x: element2.x,
     y: element2.y,
     width: element2.width,
-    height: topZoneHeight
+    height: topZoneHeight,
   };
 
   const bottomZone = {
     x: element2.x,
     y: element2.y + element2.height - bottomZoneHeight,
     width: element2.width,
-    height: bottomZoneHeight
+    height: bottomZoneHeight,
   };
 
   // Función AABB para comprobar colisión con cada zona
   function isColliding(a, b) {
-    return (
-      a.x < b.x + b.width &&
-      a.x + a.width > b.x &&
-      a.y < b.y + b.height &&
-      a.y + a.height > b.y
-    );
+    return a.x < b.x + b.width && a.x + a.width > b.x && a.y < b.y + b.height && a.y + a.height > b.y;
   }
-
-   return isColliding(element1, topZone) || isColliding(element1, bottomZone);
+  return isColliding(element1, topZone) || isColliding(element1, bottomZone);
 }
 
 // - ※ EVENTS LISTENERS

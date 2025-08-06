@@ -1,8 +1,8 @@
 //SAME PROCESS AS WITH THE DOG CLASS
 class Obstacle {
   constructor(type, xPos, yPos) {
-    
-    //Properties of any obstacle (NODE) we will create
+
+    // 🧪PROPERTIES of any obstacle (NODE) we will create
     this.node = document.createElement("img");
     this.node.className = "obstacle";
 
@@ -14,8 +14,8 @@ class Obstacle {
       this.width = 100;
     } else if (this.type === "ring") {
       this.node.src = "./images/ring.png";
-      this.height = 100;
-      this.width = 50;
+      this.height = 110;
+      this.width = 80;
     }
 
     gameBoxNode.append(this.node); //Appending the node to the game box
@@ -34,7 +34,7 @@ class Obstacle {
     this.node.style.left = `${this.x}px`;
   }
 
-  //Methods for all the actions the obstacles will make
+  // ⚙️METHODS for all the actions the obstacles will make
   automaticObstacleMovement() {
     this.x -= this.speed;
     this.node.style.left = `${this.x}px`;

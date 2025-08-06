@@ -1,7 +1,8 @@
 //DOG CLASS
 class Dog {
   constructor() {
-    //Properties for any dog (NODE) we create, all of them inside the constructor
+
+    // 🧪PROPERTIES for any dog (NODE) we create, all of them inside the constructor
     this.node = document.createElement("img"); //Image Tag, to insert dog image as a node
     this.node.className = "dog"; // Naming the node (Optional, but good practice)
     this.node.src = "./images/dogrunning.gif"; //Adding the source for that image, the src, should always be (./), because it should be access as if the node, the HTML Element was inside index HTML
@@ -16,7 +17,7 @@ class Dog {
     this.jumpSpeed = 120  ;
     this.speed = 2; 
 
-    //Adjusting the initial dimension
+    //Adjusting the initial dimension  
     this.node.style.width = `${this.width}px`;
     this.node.style.height = `${this.height}px`;
 
@@ -30,7 +31,7 @@ class Dog {
     this.isGround = true; //The Dog is in the ground
   }
 
-  //Here are all the methods for the actions that the element (dog), will do
+  //⚙️METHODS for the actions that the element (dog), will do
 
   gravityEffect() {
     //1.This will avoid that the dog crosses the screen bottom limit that was set up in 300px
@@ -48,6 +49,7 @@ class Dog {
   }
   jump() {
     if (this.isGround) {
+      console.log(this.y)
       this.y -= this.jumpSpeed;
       this.node.style.top = `${this.y}px`;
 

@@ -27,6 +27,7 @@ let obstacleSpawnIntervalId;
 
 let lifeCounter = 0;
 
+
 // - ※ GLOBAL GAME FUNCTIONS
 function startGame() {
   //1. Hiding the start game screen when btn click
@@ -52,13 +53,15 @@ function startGame() {
 }
 
 function spawnObstacle() {
+let controlRingY = "number between 135px and 235px"  
   //Variable to control how the obstacles spawn randomly
-  //let randomPosYTop = Math.floor(Math.random() * - 110)//Random number between -100 and 0
+  
+  let randomPosYring = Math.floor(Math.random() *  235)//Random number between -100 and 0
 
-  let obstacleTop = new Obstacle("dogcatcher", gameBoxNode.offsetWidth, 235); //This have the same oder (xPos, yPos) as in the constructor parameters;
+  let obstacleTop = new Obstacle("dogcatcher", gameBoxNode.offsetWidth, 235); //This have the same oder ("type", xPos, yPos) as in the constructor parameters;
   obstacleArr.push(obstacleTop);
 
-  let obstacleBottom = new Obstacle("ring",770, 130); //This have the same oder (xPos, yPOs) as in the constructor parameters;
+  let obstacleBottom = new Obstacle("ring", 770, randomPosYring); //This have the same oder ("type", xPos, yPOs) as in the constructor parameters;
   obstacleArr.push(obstacleBottom);
 
   //console.log(obstacleArr);
@@ -76,12 +79,13 @@ function checkDespawnObstacle() {
     lifeCounter += 0.5;
   }
 }
+
 let count = 0;
+
 function gameLoop() {
   count++;
   dogObj.gravityEffect();
-  //dogObj.automaticDogMovement();
-          
+  
   obstacleArr.forEach((eachObstacleObj) => {
     eachObstacleObj.automaticObstacleMovement();
   });
@@ -116,7 +120,7 @@ function checkCollisionDogObstacle() {
   //We need to first iterate over the arr
   obstacleArr.forEach((eachObstacleObj) => {
     let isColliding = checkCollision(dogObj, eachObstacleObj);
-    
+
     //console.log(isColliding);
     if (isColliding) {
       gameOver();
@@ -125,8 +129,8 @@ function checkCollisionDogObstacle() {
 }
 
 function checkCollision(element1, element2) {
-  
-  if (// Axis-Aligned Bounding Boxes (AABBs) Mathematic comprobation very typical for this kind of cases
+  if (
+    // Axis-Aligned Bounding Boxes (AABBs) Mathematic comprobation very typical for this kind of cases
     element1.x < element2.x + element2.width &&
     element1.x + element1.width > element2.x &&
     element1.y < element2.y + element2.height &&
@@ -136,6 +140,37 @@ function checkCollision(element1, element2) {
   } else {
     return false;
   }
+}
+
+function checkCollisionWithTopBottomZones(element1, element2, topPercent, bottomPercent) {
+  const topZoneHeight = element2.height * topPercent;
+  const bottomZoneHeight = element2.height * bottomPercent;
+
+  const topZone = {
+    x: element2.x,
+    y: element2.y,
+    width: element2.width,
+    height: topZoneHeight
+  };
+
+  const bottomZone = {
+    x: element2.x,
+    y: element2.y + element2.height - bottomZoneHeight,
+    width: element2.width,
+    height: bottomZoneHeight
+  };
+
+  // Función AABB para comprobar colisión con cada zona
+  function isColliding(a, b) {
+    return (
+      a.x < b.x + b.width &&
+      a.x + a.width > b.x &&
+      a.y < b.y + b.height &&
+      a.y + a.height > b.y
+    );
+  }
+
+   return isColliding(element1, topZone) || isColliding(element1, bottomZone);
 }
 
 // - ※ EVENTS LISTENERS
@@ -150,24 +185,24 @@ Game ovweview: A street dog 🐶 needs to avoid obstacles that are spawing while
 The dog will also find randomly food rewards 🥩🍗🍖 that can help him to stay healthy and get some "inmuinity" while he sort out the obstacles.
 In some of this obstacles there are also food rewards.
 
-ACTIONS - Game Loop
+ACTIONS - Game Loop 
 a. Dog movement, always in X coordinate (horizontal, right) (Example: T-Rex Chrome Dino Game)
 b. Obstacles 💀 move the opossite way (X, horizontal, left), at a different speed and at different levels in Y coordinate
 
 1. For the Dog 🐶
-   - Position Coordinatess x, y, h (height), w (width), speed (SpeedGravity, and speedJump)
-   - Action: Jump
-   - Gravity
+   - Position Coordinatess x, y, h (height), w (width), speed (SpeedGravity, and speedJump) ✅
+   - Action: Jump ✅
+   - Gravity ✅
    
 2. For the Obstacles 💀 
-   -  Position Coordinatess x, y, h (height), w (width), speed.
-   - Action (Automatic movement ← )
+   -  Position Coordinatess x, y, h (height), w (width), speed. ✅
+   - Action (Automatic movement ← ) ✅
 
-3. Spawn the Obstacles and unSpawn the Obstacles   
+3. Spawn the Obstacles and unSpawn the Obstacles  ✅ 
    
-4. Collision between Dog and Obstacles   
+4. Collision between Dog and Obstacles   ✅
 
-5. Game Over (Specialized Function, because maybe the "game over" can be trigger by other facts beside the collision with the obstacles)
+5. Game Over (Specialized Function, because maybe the "game over" can be trigger by other facts beside the collision with the obstacles) ✅
 
 BONUS
 6. Life counter

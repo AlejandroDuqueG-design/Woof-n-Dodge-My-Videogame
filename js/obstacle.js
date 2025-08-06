@@ -1,6 +1,7 @@
 //SAME PROCESS AS WITH THE DOG CLASS
 class Obstacle {
   constructor(type, xPos, yPos) {
+    
     //Properties of any obstacle (NODE) we will create
     this.node = document.createElement("img");
     this.node.className = "obstacle";
@@ -10,7 +11,7 @@ class Obstacle {
     if (this.type === "dogcatcher") {
       this.node.src = "./images/dogcatcher.gif";
       this.height = 110;
-      this.width = 80;
+      this.width = 100;
     } else if (this.type === "ring") {
       this.node.src = "./images/ring.png";
       this.height = 100;
@@ -22,7 +23,6 @@ class Obstacle {
     this.x = xPos; //The obstacle will disapperar in the game box left border
     this.y = yPos;
     this.speed = 2;
-    
 
     //Adjusting the initial dimension
     this.node.style.width = `${this.width}px`;

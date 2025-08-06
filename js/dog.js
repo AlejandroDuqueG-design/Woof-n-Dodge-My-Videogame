@@ -13,8 +13,8 @@ class Dog {
     this.height = 45;
     this.width = 75;
     this.gravitySpeed = 2;
-    this.jumpSpeed = 60;
-    this.speed = 1;
+    this.jumpSpeed = 120  ;
+    this.speed = 2; 
 
     //Adjusting the initial dimension
     this.node.style.width = `${this.width}px`;
@@ -24,7 +24,7 @@ class Dog {
     this.node.style.position = "absolute";
     this.node.style.top = `${this.y}px`;
     this.node.style.left = `${this.x}px`;
-
+  
     //Adjusting speed movement properties
 
     this.isGround = true; //The Dog is in the ground
@@ -37,10 +37,10 @@ class Dog {
     //2. gameBoxNode.offsetHeight - 55 will locate the dog in his initial position
     //3. Also, with this conditional we are checking if the sumatory of coordinate y, dog height and gravity speed are higher than gameBoxNode.offsetHeight - 55 that will mean, return anything
 
-    let offset = 55
+    let offset = 55;
 
     if (this.y + this.height + this.gravitySpeed > gameBoxNode.offsetHeight - offset) {
-      this.isGround = true
+      this.isGround = true;
       return;
     }
     this.y += this.gravitySpeed;
@@ -51,12 +51,7 @@ class Dog {
       this.y -= this.jumpSpeed;
       this.node.style.top = `${this.y}px`;
 
-      this.isGround = false
+      this.isGround = false;
     }
-  }
-
-  automaticDogMovement() {
-    this.x += this.speed;
-    this.node.style.left = `${this.x}px`;
   }
 }

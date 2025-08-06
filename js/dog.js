@@ -37,7 +37,9 @@ class Dog {
     //2. gameBoxNode.offsetHeight - 55 will locate the dog in his initial position
     //3. Also, with this conditional we are checking if the sumatory of coordinate y, dog height and gravity speed are higher than gameBoxNode.offsetHeight - 55 that will mean, return anything
 
-    if (this.y + this.height + this.gravitySpeed > gameBoxNode.offsetHeight - 55) {
+    let offset = 55
+
+    if (this.y + this.height + this.gravitySpeed > gameBoxNode.offsetHeight - offset) {
       this.isGround = true
       return;
     }

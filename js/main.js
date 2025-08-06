@@ -62,7 +62,7 @@ function spawnObstacle() {
   // 2. X va a ser la misma para ambos obstacles
 
   let randomNumber = Math.round(Math.random() * 3);
-  console.log(randomNumber);
+  //console.log(randomNumber);
   if (randomNumber === 0) {
     return;
   } else if (randomNumber === 1) {
@@ -97,15 +97,20 @@ function gameLoop() {
 
   obstacleArr.forEach((eachObstacleObj) => {
     eachObstacleObj.automaticObstacleMovement();
-  });  
+  });
 
   checkDespawnObstacle();
   //checkCollisionDogObstacle();
+
 }
 
-function handleDogJump(event) {
+function handleKeyboardEvent(event) {
   if (event.code === "Space" || event.code === "ArrowUp") {
     dogObj.jump(); //This function was created as a good practice, better to have the event organized in a function
+  } else if (event.code === "ArrowRight") {
+    dogObj.dogMovement("right");
+  }else if (event.code === "ArrowLeft") {
+    dogObj.dogMovement("left")
   }
 }
 
@@ -179,7 +184,7 @@ function checkCollisionWithTopBottomZones(element1, element2, topPercent, bottom
 // - ※ EVENTS LISTENERS
 startBtnNode.addEventListener("click", startGame);
 //Keydown = Any key in the keyboard
-document.addEventListener("keydown", handleDogJump);
+document.addEventListener("keydown", handleKeyboardEvent);
 
 startGame();
 

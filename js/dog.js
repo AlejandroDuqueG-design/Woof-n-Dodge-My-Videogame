@@ -1,7 +1,6 @@
 //DOG CLASS
 class Dog {
   constructor() {
-
     // 🧪PROPERTIES for any dog (NODE) we create, all of them inside the constructor
     this.node = document.createElement("img"); //Image Tag, to insert dog image as a node
     this.node.className = "dog"; // Naming the node (Optional, but good practice)
@@ -14,10 +13,10 @@ class Dog {
     this.height = 45;
     this.width = 75;
     this.gravitySpeed = 2;
-    this.jumpSpeed = 120  ;
-    this.speed = 2; 
+    this.jumpSpeed = 120;
+    this.speed = 50;
 
-    //Adjusting the initial dimension  
+    //Adjusting the initial dimension
     this.node.style.width = `${this.width}px`;
     this.node.style.height = `${this.height}px`;
 
@@ -25,7 +24,7 @@ class Dog {
     this.node.style.position = "absolute";
     this.node.style.top = `${this.y}px`;
     this.node.style.left = `${this.x}px`;
-  
+
     //Adjusting speed movement properties
 
     this.isGround = true; //The Dog is in the ground
@@ -49,11 +48,27 @@ class Dog {
   }
   jump() {
     if (this.isGround) {
-      console.log(this.y)
+      console.log(this.y);
       this.y -= this.jumpSpeed;
       this.node.style.top = `${this.y}px`;
 
       this.isGround = false;
     }
+  }
+
+  dogMovement(direction) {
+    if (direction === "right") {
+      if (this.x + this.width + this.speed > gameBoxNode.offsetWidth) {
+        return;
+      }
+      this.x += this.speed;
+    } else if (direction === "left") {
+      if (this.x - this.speed < 0) {
+        return;
+      }
+      this.x -= this.speed;
+    }
+
+    this.node.style.left = `${this.x}px`;
   }
 }

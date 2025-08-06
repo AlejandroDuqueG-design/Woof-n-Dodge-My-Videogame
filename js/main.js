@@ -55,10 +55,10 @@ function spawnObstacle() {
   //Variable to control how the obstacles spawn randomly
   //let randomPosYTop = Math.floor(Math.random() * - 110)//Random number between -100 and 0
 
-  let obstacleTop = new Obstacle(610, 190); //This have the same oder (xPos, yPos) as in the constructor parameters;
+  let obstacleTop = new Obstacle("dogcatcher", gameBoxNode.offsetWidth, 235); //This have the same oder (xPos, yPos) as in the constructor parameters;
   obstacleArr.push(obstacleTop);
 
-  let obstacleBottom = new Obstacle(770, 130); //This have the same oder (xPos, yPOs) as in the constructor parameters;
+  let obstacleBottom = new Obstacle("ring",770, 130); //This have the same oder (xPos, yPOs) as in the constructor parameters;
   obstacleArr.push(obstacleBottom);
 
   //console.log(obstacleArr);

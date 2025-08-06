@@ -12,9 +12,9 @@ class Dog {
     this.y = 300;
     this.height = 45;
     this.width = 75;
-    this.gravitySpeed = 2;
-    this.jumpSpeed = 120;
-    this.speed = 50;
+    this.gravitySpeed = 1.5;
+    this.jumpSpeed = 160;
+    this.speed = 70;  
 
     //Adjusting the initial dimension
     this.node.style.width = `${this.width}px`;

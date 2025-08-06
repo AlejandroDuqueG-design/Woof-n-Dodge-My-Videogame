@@ -10,12 +10,12 @@ class Obstacle {
     this.type = type;
     if (this.type === "dogcatcher") {
       this.node.src = "./images/dogcatcher.gif";
-      this.height = 110;
-      this.width = 100;
+      this.height = 90;
+      this.width = 90;
     } else if (this.type === "ring") {
       this.node.src = "./images/ring.png";
-      this.height = 110;
-      this.width = 80;
+      this.height = 90;
+      this.width = 30;
     }
 
     gameBoxNode.append(this.node); //Appending the node to the game box

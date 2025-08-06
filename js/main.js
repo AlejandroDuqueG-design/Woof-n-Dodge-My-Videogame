@@ -10,6 +10,7 @@ const gameOverScreenNode = document.querySelector("#game-over-screen");
 
 // • Buttons/
 const startBtnNode = document.querySelector("#start-btn");
+const playAgainBtnNode = document.querySelector("#play-again-btn")
 
 // • Game Box/
 const gameBoxNode = document.querySelector("#game-box");
@@ -29,6 +30,7 @@ let lifeCounter = 0;
 
 // - ※ GLOBAL GAME FUNCTIONS
 function startGame() {
+  console.log("start")
   //1. Hiding the start game screen when btn click
   startScreenNode.style.display = "none";
 
@@ -66,13 +68,13 @@ function spawnObstacle() {
   if (randomNumber === 0) {
     return;
   } else if (randomNumber === 1) {
-    let dogCatcher = new Obstacle("dogcatcher", gameBoxNode.offsetWidth, 235); //This have the same oder ("type", xPos, yPos) as in the constructor parameters;
+    let dogCatcher = new Obstacle("dogcatcher", gameBoxNode.offsetWidth, 255); //This have the same oder ("type", xPos, yPos) as in the constructor parameters;
     obstacleArr.push(dogCatcher);
   } else if (randomNumber === 2) {
     let ring = new Obstacle("ring", gameBoxNode.offsetWidth, randomPosYring); //This have the same oder ("type", xPos, yPOs) as in the constructor parameters;
     obstacleArr.push(ring);
   } else if (randomNumber === 3) {
-    let dogCatcher = new Obstacle("dogcatcher", gameBoxNode.offsetWidth, 235); //This have the same oder ("type", xPos, yPos) as in the constructor parameters;
+    let dogCatcher = new Obstacle("dogcatcher", gameBoxNode.offsetWidth, 255); //This have the same oder ("type", xPos, yPos) as in the constructor parameters;
     obstacleArr.push(dogCatcher);
     let ring = new Obstacle("ring", gameBoxNode.offsetWidth, randomPosYring - 20); //This have the same oder ("type", xPos, yPOs) as in the constructor parameters;
     obstacleArr.push(ring);
@@ -100,8 +102,7 @@ function gameLoop() {
   });
 
   checkDespawnObstacle();
-  //checkCollisionDogObstacle();
-
+  checkCollisionDogObstacle();
 }
 
 function handleKeyboardEvent(event) {
@@ -109,8 +110,8 @@ function handleKeyboardEvent(event) {
     dogObj.jump(); //This function was created as a good practice, better to have the event organized in a function
   } else if (event.code === "ArrowRight") {
     dogObj.dogMovement("right");
-  }else if (event.code === "ArrowLeft") {
-    dogObj.dogMovement("left")
+  } else if (event.code === "ArrowLeft") {
+    dogObj.dogMovement("left");
   }
 }
 
@@ -124,10 +125,19 @@ function gameOver() {
   //2. Hide the game screen.
   gameScreenNode.style.display = "none";
 
-  //3. Make the gam over screen appears
+  //3. Make the game over screen appears
   gameOverScreenNode.style.display = "flex";
 
   //4. We need to CLEAR the game (removing all nodes and restarting all variables)
+
+}
+
+function restartGame (){
+
+  gameOverScreenNode.style.display = "none"
+  gameScreenNode.style.display = "flex"
+
+  startGame()
 }
 
 function checkCollisionDogObstacle() {
@@ -135,14 +145,23 @@ function checkCollisionDogObstacle() {
   obstacleArr.forEach((eachObstacleObj) => {
     let isColliding = checkCollision(dogObj, eachObstacleObj);
 
-    //console.log(isColliding);
     if (isColliding) {
       gameOver();
     }
   });
 }
 
-function checkCollision(element1, element2) {
+function checkCollision(element1, element2) {//To reduce elements padding and make the collision smoother
+  const dx = element1.x + element1.width / 2 - (element2.x + element2.width / 2);
+  const dy = element1.y + element1.height / 2 - (element2.y + element2.height / 2);
+  const distance = Math.sqrt(dx * dx + dy * dy);
+
+  const collisionDistance = (element1.width + element2.width) / 2 - 10; // Ajusta el margen
+
+  return distance < collisionDistance;
+}
+
+/*function checkCollision(element1, element2) {
   if (
     // Axis-Aligned Bounding Boxes (AABBs) Mathematic comprobation very typical for this kind of cases
     element1.x < element2.x + element2.width &&
@@ -154,7 +173,7 @@ function checkCollision(element1, element2) {
   } else {
     return false;
   }
-}
+}*/
 
 function checkCollisionWithTopBottomZones(element1, element2, topPercent, bottomPercent) {
   const topZoneHeight = element2.height * topPercent;
@@ -183,10 +202,13 @@ function checkCollisionWithTopBottomZones(element1, element2, topPercent, bottom
 
 // - ※ EVENTS LISTENERS
 startBtnNode.addEventListener("click", startGame);
+
+playAgainBtnNode.addEventListener("click", restartGame)
+
 //Keydown = Any key in the keyboard
 document.addEventListener("keydown", handleKeyboardEvent);
 
-startGame();
+//startGame();
 
 /* Planning of the Game in JS (Different} Elements, their properties and the actions they will make)
 Game ovweview: A street dog 🐶 needs to avoid obstacles that are spawing while he runs trough the city.

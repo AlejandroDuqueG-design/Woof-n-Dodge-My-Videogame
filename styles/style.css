@@ -31,7 +31,7 @@ body {
     height: 400px;
 
     position: relative;
-    /*overflow: hidden;*/
+    overflow: hidden;
     user-select: none;
 }
 
@@ -45,7 +45,7 @@ body {
     display: none;
 } 
 .obstacle {
-    border: solid 1px red
+    /*border: solid 1px red*/
 }
 
 

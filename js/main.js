@@ -10,7 +10,7 @@ const gameOverScreenNode = document.querySelector("#game-over-screen");
 
 // • Buttons/
 const startBtnNode = document.querySelector("#start-btn");
-const playAgainBtnNode = document.querySelector("#play-again-btn")
+const playAgainBtnNode = document.querySelector("#play-again-btn");
 
 // • Game Box/
 const gameBoxNode = document.querySelector("#game-box");
@@ -30,7 +30,7 @@ let lifeCounter = 0;
 
 // - ※ GLOBAL GAME FUNCTIONS
 function startGame() {
-  console.log("start")
+  console.log("start");
   //1. Hiding the start game screen when btn click
   startScreenNode.style.display = "none";
 
@@ -106,8 +106,9 @@ function gameLoop() {
 }
 
 function handleKeyboardEvent(event) {
+  //Everything related with keys (keydown)
   if (event.code === "Space" || event.code === "ArrowUp") {
-    dogObj.jump(); //This function was created as a good practice, better to have the event organized in a function
+    dogObj.jump();
   } else if (event.code === "ArrowRight") {
     dogObj.dogMovement("right");
   } else if (event.code === "ArrowLeft") {
@@ -129,15 +130,29 @@ function gameOver() {
   gameOverScreenNode.style.display = "flex";
 
   //4. We need to CLEAR the game (removing all nodes and restarting all variables)
+  const obstacleElementsNodeList = document.querySelectorAll(".obstacle");
+  obstacleElementsNodeList.forEach((eachNode) => eachNode.remove());
+  obstacleArr.splice(0,obstacleArr.length)
 
+  //const dogElementNode = document.querySelector(".dog");                                                                           
+  //dogElementNode.remove();
+
+  dogObj.node.remove()
+  dogObj = undefined
+
+ 
 }
 
-function restartGame (){
+function restartGame() {
 
-  gameOverScreenNode.style.display = "none"
-  gameScreenNode.style.display = "flex"
+  // 1. Hide Game Over screen                                                                                                                                                                               
+  gameOverScreenNode.style.display = "none";
+                                                                          
+  // 2. Show again game screen
+  gameScreenNode.style.display = "flex";
 
-  startGame()
+  startGame();
+ 
 }
 
 function checkCollisionDogObstacle() {
@@ -151,7 +166,8 @@ function checkCollisionDogObstacle() {
   });
 }
 
-function checkCollision(element1, element2) {//To reduce elements padding and make the collision smoother
+function checkCollision(element1, element2) {
+  //To reduce elements padding and make the collision smoother
   const dx = element1.x + element1.width / 2 - (element2.x + element2.width / 2);
   const dy = element1.y + element1.height / 2 - (element2.y + element2.height / 2);
   const distance = Math.sqrt(dx * dx + dy * dy);
@@ -203,12 +219,10 @@ function checkCollisionWithTopBottomZones(element1, element2, topPercent, bottom
 // - ※ EVENTS LISTENERS
 startBtnNode.addEventListener("click", startGame);
 
-playAgainBtnNode.addEventListener("click", restartGame)
+playAgainBtnNode.addEventListener("click", restartGame);
 
 //Keydown = Any key in the keyboard
 document.addEventListener("keydown", handleKeyboardEvent);
-
-//startGame();
 
 /* Planning of the Game in JS (Different} Elements, their properties and the actions they will make)
 Game ovweview: A street dog 🐶 needs to avoid obstacles that are spawing while he runs trough the city.

@@ -28,6 +28,7 @@ class Dog {
     //Adjusting speed movement properties
 
     this.isGround = true; //The Dog is in the ground
+    this.canPassThroughRings = true; //The dog can go through the rings
   }
 
   //⚙️METHODS for the actions that the element (dog), will do

@@ -2,42 +2,47 @@
 
 // • Screens Variables!/
 // Game Start Screen
-const startScreenNode = document.querySelector("#start-screen");
+const startScreenNode = document.querySelector("#start-screen") //Pantalla de Inicio;
 // Game Screen Background
-const gameScreenNode = document.querySelector("#game-screen");
+const gameScreenNode = document.querySelector("#game-screen"); //Pantalla de juego
 //Game Over
-const gameOverScreenNode = document.querySelector("#game-over-screen");
+const gameOverScreenNode = document.querySelector("#game-over-screen"); //Pantalla GameOver
 
 // • Buttons/
 const startBtnNode = document.querySelector("#start-btn");
 const playAgainBtnNode = document.querySelector("#play-again-btn");
 
 // • Game Box/
-const gameBoxNode = document.querySelector("#game-box");
-
+const gameBoxNode = document.querySelector("#game-box"); //Contenedor para elementos del juego
 // - ※ GLOBAL GAME VARIABLES
 
-let dogObj; //THis will be empty by now, cause the gamee has not started
+let dogObj; //Esta variable comienza vacia, solo se le asigna valor cuando comienza el juego
 //let obstacleObj;
-let obstacleArr = []; //let obstacleObj is commented because we need to break the code and change it for an arr, since we need multiple obstacles spawing one after the other
-
-let obstacleSpawnFrequency = 3000;
+let obstacleArr = []; 
+//let obstacleObj esta comentada, porque primero necesitamos romper el codigo y cambiarla por un arr, ya que se necesitan multiples obstaculos saliendo, uno detras de otro
+let obstacleSpawnFrequency = 3000; //(Frecuencia con la que salen los obstaculos en milisegundos)
 
 let gameIntervalId;
 let obstacleSpawnIntervalId;
 
 let lifeCounter = 0;
 
+// 🔊 AÑADIENDO SONIDOS (Se crean Variables)
+const jumpSound = new Audio("sounds/jumpsound.mp3");
+const collisionSound = new Audio("sounds/collisionwithobstaclessound.mp3");
+const gameOverSound = new Audio("sounds/gameoversound.mp3");
+const backgroundMusic = new Audio("sounds/backgroundmusic.mp3");
+const gotRewardSound = new Audio("sounds/gettingrewardsound.mp3");
+
 // - ※ GLOBAL GAME FUNCTIONS
 function startGame() {
-  console.log("start");
-  //1. Hiding the start game screen when btn click
+  //1. Ocultar pantalla de Inicio
   startScreenNode.style.display = "none";
 
-  //2. Display the game screen after btn click
+  //2. Mostrar pantalla de juego, cuando se hace click en el Btn Star Game
   gameScreenNode.style.display = "flex";
 
-  //3. Adding inicial element (Dog) to the game
+  //3. Se añade elemento inicial a la pantalla (Dog)
   dogObj = new Dog();
 
   //obstacleObj = new Obstacle(); We are now going to use the recently created empty arr let obstacleArr = []
@@ -48,7 +53,16 @@ function startGame() {
   gameIntervalId = setInterval(gameLoop, Math.round(1000 / 60));
 
   //5. Set up any other interval or timeout that we may need
-  obstacleSpawnIntervalId = setInterval(spawnObstacle, obstacleSpawnFrequency);
+
+  //6. Adding background music
+  //backgroundMusic.loop = true;
+  backgroundMusic.volume = 0.5;
+  //backgroundMusic.play();
+
+  //5. Set up any other interval or timeout that we may need
+  obstacleSpawnIntervalId = setInterval(spawnObstacle, obstacleSpawnFrequency); 
+//Se invoca la funcion spawnObstacle para que salgan obstaculos de acuerdo al intervalo establecido
+
 }
 
 function spawnObstacle() {
@@ -99,8 +113,9 @@ function gameLoop() {
 
   obstacleArr.forEach((eachObstacleObj) => {
     eachObstacleObj.automaticObstacleMovement();
+   
   });
-
+console.log(obstacleArr.length)
   checkDespawnObstacle();
   checkCollisionDogObstacle();
 }
@@ -132,36 +147,36 @@ function gameOver() {
   //4. We need to CLEAR the game (removing all nodes and restarting all variables)
   const obstacleElementsNodeList = document.querySelectorAll(".obstacle");
   obstacleElementsNodeList.forEach((eachNode) => eachNode.remove());
-  obstacleArr.splice(0,obstacleArr.length)
+  obstacleArr.splice(0, obstacleArr.length);
 
-  //const dogElementNode = document.querySelector(".dog");                                                                           
+  //const dogElementNode = document.querySelector(".dog");
   //dogElementNode.remove();
 
-  dogObj.node.remove()
-  dogObj = undefined
-
- 
+  dogObj.node.remove();
+  dogObj = undefined;
 }
 
 function restartGame() {
-
-  // 1. Hide Game Over screen                                                                                                                                                                               
+  // 1. Hide Game Over screen
   gameOverScreenNode.style.display = "none";
-                                                                          
+
   // 2. Show again game screen
   gameScreenNode.style.display = "flex";
 
   startGame();
- 
 }
 
 function checkCollisionDogObstacle() {
   //We need to first iterate over the arr
   obstacleArr.forEach((eachObstacleObj) => {
     let isColliding = checkCollision(dogObj, eachObstacleObj);
-
     if (isColliding) {
-      gameOver();
+      if (eachObstacleObj.type === "dogcatcher") {//Adding sounds to the dogcatcher obstacle
+        collisionSound.play();
+        //gameOverSound.play();
+
+        gameOver();
+      }
     }
   });
 }

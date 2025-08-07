@@ -8,13 +8,13 @@ class Dog {
 
     gameBoxNode.append(this.node); //Appending the node to the game box
 
-    this.x = 70;
+    this.x = 80;
     this.y = 300;
     this.height = 45;
     this.width = 75;
-    this.gravitySpeed = 1.5;
+    this.gravitySpeed = 2;
     this.jumpSpeed = 160;
-    this.speed = 70;  
+    this.speed = 80;  
 
     //Adjusting the initial dimension
     this.node.style.width = `${this.width}px`;
@@ -54,7 +54,9 @@ class Dog {
       this.node.style.top = `${this.y}px`;
 
       this.isGround = false;
+    
     }
+    jumpSound.play()
   }
 
   dogMovement(direction) {

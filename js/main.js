@@ -2,7 +2,7 @@
 
 // • Screens Variables!/
 // Game Start Screen
-const startScreenNode = document.querySelector("#start-screen") //Pantalla de Inicio;
+const startScreenNode = document.querySelector("#start-screen"); //Pantalla de Inicio;
 // Game Screen Background
 const gameScreenNode = document.querySelector("#game-screen"); //Pantalla de juego
 //Game Over
@@ -18,7 +18,10 @@ const gameBoxNode = document.querySelector("#game-box"); //Contenedor para eleme
 
 let dogObj; //Esta variable comienza vacia, solo se le asigna valor cuando comienza el juego
 //let obstacleObj;
-let obstacleArr = []; 
+let obstacleArr = [];
+
+let rewardArr = [];
+
 //let obstacleObj esta comentada, porque primero necesitamos romper el codigo y cambiarla por un arr, ya que se necesitan multiples obstaculos saliendo, uno detras de otro
 let obstacleSpawnFrequency = 3000; //(Frecuencia con la que salen los obstaculos en milisegundos)
 
@@ -55,44 +58,46 @@ function startGame() {
   //5. Set up any other interval or timeout that we may need
 
   //6. Adding background music
-  //backgroundMusic.loop = true;
-  backgroundMusic.volume = 0.5;
-  //backgroundMusic.play();
+  // backgroundMusic.loop = true;
+  // backgroundMusic.volume = 0.5;
+  // backgroundMusic.play();
 
   //5. Set up any other interval or timeout that we may need
-  obstacleSpawnIntervalId = setInterval(spawnObstacle, obstacleSpawnFrequency); 
-//Se invoca la funcion spawnObstacle para que salgan obstaculos de acuerdo al intervalo establecido
-
+  obstacleSpawnIntervalId = setInterval(spawnObstacle, obstacleSpawnFrequency);
+  //Se invoca la funcion spawnObstacle para que salgan obstaculos de acuerdo al intervalo establecido
 }
 
 function spawnObstacle() {
-  //Variable to control how the obstacles spawn randomly at a different height for the ring
+  //Variable to control how the obstacles spawn randomly at a different height in the ring case
   let randomPosYring = Math.floor(Math.random() * 100) + 100; //Random number between 100 y 200 (Multiplied by 100 and then adding 100)
 
   // Generar un numero aleatorio entre 0 y 3
   // 1. Condicional para determinar como van a aparecer los elementos:
-  // - Si el número es 0, no pasa nada,
-  // - Si el número es 1, aparece solo el enemigo,
-  // - Si el número es 2 aparece solo el aro y
-  // - Si el número es 3 aparecen ambos
-  // 2. X va a ser la misma para ambos obstacles
-
   let randomNumber = Math.round(Math.random() * 3);
   //console.log(randomNumber);
   if (randomNumber === 0) {
+    // - Si el número es 0, no pasa nada,
     return;
   } else if (randomNumber === 1) {
+    // - Si el número es 1, aparece solo el enemigo,
     let dogCatcher = new Obstacle("dogcatcher", gameBoxNode.offsetWidth, 255); //This have the same oder ("type", xPos, yPos) as in the constructor parameters;
     obstacleArr.push(dogCatcher);
   } else if (randomNumber === 2) {
+    // - Si el número es 2 aparece solo el aro y
     let ring = new Obstacle("ring", gameBoxNode.offsetWidth, randomPosYring); //This have the same oder ("type", xPos, yPOs) as in the constructor parameters;
     obstacleArr.push(ring);
+    let beef = new Reward("beef", gameBoxNode.offsetWidth, randomPosYring + 40);
+    rewardArr.push(beef);
   } else if (randomNumber === 3) {
+    // - Si el número es 3 aparecen ambos
     let dogCatcher = new Obstacle("dogcatcher", gameBoxNode.offsetWidth, 255); //This have the same oder ("type", xPos, yPos) as in the constructor parameters;
     obstacleArr.push(dogCatcher);
     let ring = new Obstacle("ring", gameBoxNode.offsetWidth, randomPosYring - 20); //This have the same oder ("type", xPos, yPOs) as in the constructor parameters;
     obstacleArr.push(ring);
+
+    // 2. X va a ser la misma para ambos obstacles
   }
+
   //console.log(obstacleArr);
 }
 
@@ -104,6 +109,9 @@ function checkDespawnObstacle() {
     obstacleArr[0].node.remove();
     //2. from the code
     obstacleArr.splice(0, 1); //or shift can also be used here, if it is always to remove the first element
+  } else if (rewardArr[0] && rewardArr[0].x < 0) {
+    rewardArr[0].node.remove();
+    rewardArr.splice(0, 1);
   }
 }
 
@@ -113,11 +121,15 @@ function gameLoop() {
 
   obstacleArr.forEach((eachObstacleObj) => {
     eachObstacleObj.automaticObstacleMovement();
-   
   });
-console.log(obstacleArr.length)
+
   checkDespawnObstacle();
   checkCollisionDogObstacle();
+  //checkCollisionDogReward();
+
+  rewardArr.forEach((eachRewardElement) => {
+    eachRewardElement.automaticRewardMovement();
+  });
 }
 
 function handleKeyboardEvent(event) {
@@ -171,15 +183,32 @@ function checkCollisionDogObstacle() {
   obstacleArr.forEach((eachObstacleObj) => {
     let isColliding = checkCollision(dogObj, eachObstacleObj);
     if (isColliding) {
-      if (eachObstacleObj.type === "dogcatcher") {//Adding sounds to the dogcatcher obstacle
+      if (eachObstacleObj.type === "dogcatcher") {
+        //Adding sounds to the dogcatcher obstacle
         collisionSound.play();
-        //gameOverSound.play();
+        gameOverSound.play();
 
         gameOver();
       }
     }
   });
+  // if (checkCollision(dogObj, reward)) {
+  //   gotRewardSound.play(); // sonido al recoger carne
+  //   reward.remove();       // eliminar del DOM
+  //   rewardArr.splice(index, 1); // eliminar del array
+  //   lifeCounter++;         // aumentar vidas o puntos
+  //   console.log("¡Carne recolectada! Vidas:", lifeCounter);
+  // }
 }
+
+// function checkCollisionDogReward() {
+//   Es necesario primero, iterar sobre el arr de recompensas
+//   rewardArr.forEach((eachRewardElement) => {
+//     let areColliding = checkCollision(dogObj, eachRewardElement);
+//     if (areColliding) {
+//     }
+//   });
+// }
 
 function checkCollision(element1, element2) {
   //To reduce elements padding and make the collision smoother

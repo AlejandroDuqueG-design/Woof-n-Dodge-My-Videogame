@@ -58,6 +58,14 @@ body {
     border: none;
     
 }
+
+#score-display {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 20px;
+  color: white;
+}
 /*.obstacle {
     border: solid 1px red
 }*/

@@ -14,6 +14,8 @@ const playAgainBtnNode = document.querySelector("#play-again-btn");
 
 // • Game Box/
 const gameBoxNode = document.querySelector("#game-box"); //Contenedor para elementos del juego
+const scoreDisplay = document.querySelector("#score-display");
+
 // - ※ GLOBAL GAME VARIABLES
 
 let dogObj; //Esta variable comienza vacia, solo se le asigna valor cuando comienza el juego
@@ -28,7 +30,7 @@ let obstacleSpawnFrequency = 3000; //(Frecuencia con la que salen los obstaculos
 let gameIntervalId;
 let obstacleSpawnIntervalId;
 
-let lifeCounter = 0;
+let score = 0;
 
 // 🔊 AÑADIENDO SONIDOS (Se crean Variables)
 const jumpSound = new Audio("sounds/jumpsound.mp3");
@@ -56,15 +58,13 @@ function startGame() {
   gameIntervalId = setInterval(gameLoop, Math.round(1000 / 60));
 
   //5. Set up any other interval or timeout that we may need
-
-  //6. Adding background music
-  // backgroundMusic.loop = true;
-  // backgroundMusic.volume = 0.5;
-  // backgroundMusic.play();
-
-  //5. Set up any other interval or timeout that we may need
   obstacleSpawnIntervalId = setInterval(spawnObstacle, obstacleSpawnFrequency);
   //Se invoca la funcion spawnObstacle para que salgan obstaculos de acuerdo al intervalo establecido
+
+  //6. Adding background music
+  backgroundMusic.loop = true;
+  backgroundMusic.volume = 0.5;
+  backgroundMusic.play();
 }
 
 function spawnObstacle() {
@@ -125,7 +125,7 @@ function gameLoop() {
 
   checkDespawnObstacle();
   checkCollisionDogObstacle();
-  //checkCollisionDogReward();
+  checkCollisionDogReward();
 
   rewardArr.forEach((eachRewardElement) => {
     eachRewardElement.automaticRewardMovement();
@@ -166,6 +166,11 @@ function gameOver() {
 
   dogObj.node.remove();
   dogObj = undefined;
+  score = 0;
+  updateScoreDisplay();
+
+  backgroundMusic.pause();
+  backgroundMusic.currentTime = 0;
 }
 
 function restartGame() {
@@ -201,14 +206,25 @@ function checkCollisionDogObstacle() {
   // }
 }
 
-// function checkCollisionDogReward() {
-//   Es necesario primero, iterar sobre el arr de recompensas
-//   rewardArr.forEach((eachRewardElement) => {
-//     let areColliding = checkCollision(dogObj, eachRewardElement);
-//     if (areColliding) {
-//     }
-//   });
-// }
+//FUNCIÓN PARA PONER UN CONTADOR DE PUNTOS
+function updateScoreDisplay() {
+  scoreDisplay.innerText = "Points: " + score;
+}
+
+//FUNCION PARA COMPROBAR COLISIÓN ENTRE EL PERRO Y LA RECOMPENSA
+function checkCollisionDogReward() {
+  rewardArr.forEach((eachRewardElement, index) => {
+    let areColliding = checkCollision(dogObj, eachRewardElement);
+    //console.log ("Revisando colisión")
+    if (areColliding) {
+      gotRewardSound.play(); // sonido al recoger carne
+      eachRewardElement.node.remove(); // eliminar del DOM
+      rewardArr.splice(index, 1); // eliminar del array
+      score++; // aumentar vidas o puntos
+      updateScoreDisplay();
+    }
+  });
+}
 
 function checkCollision(element1, element2) {
   //To reduce elements padding and make the collision smoother
@@ -258,6 +274,11 @@ function checkCollisionWithTopBottomZones(element1, element2, topPercent, bottom
     return a.x < b.x + b.width && a.x + a.width > b.x && a.y < b.y + b.height && a.y + a.height > b.y;
   }
   return isColliding(element1, topZone) || isColliding(element1, bottomZone);
+}
+
+function updateLifeCounterDisplay() {
+  const display = document.getElementById("lifeCounterDisplay");
+  display.textContent = "Vidas: " + lifeCounter;
 }
 
 // - ※ EVENTS LISTENERS

@@ -14,7 +14,7 @@ class Obstacle {
     } else if (this.type === "ring") {
       this.node.src = "./images/ring.png";
       this.height = 95;
-      this.width = 95;
+      this.width = 16;
     }
 
     gameBoxNode.append(this.node); //Appending the node to the game box

@@ -12,13 +12,13 @@ A street **dog** runs the city looking for **food** while a an **animal control 
 
 # Main Functionalities
 
-- The dog can jump and move left right in order to avoid obstacles(Dog catcher)
-- Rewards are presented as meet and are eaten by the dog
-- The rewards/meet give points that are updated in a score 
+- The dog can **jump** and **move left right** in order to **avoid obstacles** (Dog catcher)
+- **Rewards** are presented as meat and are **eaten by the dog (disappear from game when eaten)**
+- The rewards/meat **give points** that are **updated in a score** 
 
 # Backlog Functionalities
 
-- Make the rings function as obstacle as well, but make the dog go through them to not collide.
+- Make the rings function as obstacle as well, but make the dog go through them not colliding.
 - Set up a lifecounter.
 - Improve the reward system, for example adding functionalities like strenght or inmunity to the dog.
 
@@ -33,10 +33,9 @@ A street **dog** runs the city looking for **food** while a an **animal control 
 - Figma.
 
 # States
-
-- List here the different screens of your game.
-- Start Game Screen with video game name logo and "Start" Button.
-- Game box Screen, where the game actually happens, with a background image, the dog (main character), the obstacles amnd a score counter.
+.
+- *Start Game Screen* with video game name logo and **"Start" Button**.
+- *Game box Screen*, where the game actually happens, with a **background** image, **the dog** (main character), **the obstacles**, **rewards** and **score counter**.
 
 # Proyect Structure
 
@@ -58,9 +57,10 @@ Contain:
 
 
 ### dog.js
-- Here are the dog properties that let create the doig inside the main.js
+- Here are the dog properties that let create the dog inside the main.js
 
-    ```class Dog {
+```   
+    class Dog {
       constructor() {
       this.node = document.createElement("img"); 
       this.node.className = "dog"; 
@@ -91,12 +91,13 @@ Contain:
 ## obstacle.js 
 - Obstacles properties were created here in order to add obstacles to the main.js
 
-    ```class Obstacle {
-     constructor(type, xPos, yPos) {
-     this.node = document.createElement("img");
-     this.node.className = "obstacle";
-     this.type = type;
-     if (this.type === "dogcatcher") {
+```
+    class Obstacle {
+      constructor(type, xPos, yPos) {
+      this.node = document.createElement("img");
+      this.node.className = "obstacle";
+      this.type = type;
+      if (this.type === "dogcatcher") {
       this.node.src = "./images/dogcatcher.gif";
       this.height = 90;
       this.width = 90;
@@ -108,25 +109,27 @@ Contain:
 
     gameBoxNode.append(this.node); 
 
-    this.x = xPos; 
-    this.y = yPos;
-    this.speed = 2;
+     this.x = xPos; 
+     this.y = yPos;
+     this.speed = 2;
 
-    this.node.style.width = `${this.width}px`;
-    this.node.style.height = `${this.height}px`;
+     this.node.style.width = `${this.width}px`;
+     this.node.style.height = `${this.height}px`;
 
-    this.node.style.position = "absolute";
-    this.node.style.top = `${this.y}px`;
-    this.node.style.left = `${this.x}px`;
+     this.node.style.position = "absolute";
+     this.node.style.top = `${this.y}px`;
+     this.node.style.left = `${this.x}px`;
   }
-  }```
+  }
+  ```
 
 
 
 ## reward.js 
 - Was created as a class as well and contain all the properties that allow to add rewards in the main.js file.
 
-    ```class Reward {
+    ```
+    class Reward {
     constructor(type, xPos, yPos) {
     this.node = document.createElement("img"); 
     this.node.className = "reward";
@@ -154,7 +157,8 @@ Contain:
     this.node.style.top = `${this.y}px`;
     this.node.style.left = `${this.x}px`;
   }
-  }```
+  }
+  ```
 
 # Extra Links 
 

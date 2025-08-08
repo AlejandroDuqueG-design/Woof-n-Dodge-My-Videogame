@@ -87,10 +87,11 @@ Contain:
       this.canPassThroughRings = true; 
     }
     }
-    ```
+```
 
-``## obstacle.js 
-- Obstacles properties were created here in order to add obstacles to the main.js``
+
+## obstacle.js 
+- Obstacles properties were created here in order to add obstacles to the main.js
 
 ```
     class Obstacle {
@@ -122,13 +123,13 @@ Contain:
      this.node.style.left = `${this.x}px`;
   }
   }
-  ```
+```
 
 
-``## reward.js 
+## reward.js 
 - Was created as a class as well and contain all the properties that allow to add rewards in the main.js file.``
 
-    ```
+```
     class Reward {
     constructor(type, xPos, yPos) {
     this.node = document.createElement("img"); 
@@ -158,7 +159,7 @@ Contain:
     this.node.style.left = `${this.x}px`;
   }
   }
-  ```
+```
 
 # Extra Links 
 

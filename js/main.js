@@ -64,7 +64,7 @@ function startGame() {
 
   //6. Adding background music
   backgroundMusic.loop = true;
-  backgroundMusic.volume = 0.5;
+  backgroundMusic.volume = 0.1;
   backgroundMusic.play();
 }
 
@@ -192,7 +192,9 @@ function checkCollisionDogObstacle() {
     if (isColliding) {
       if (eachObstacleObj.type === "dogcatcher") {
         collisionSound.play();
+        collisionSound.volume = 0.1; 
         gameOverSound.play();
+        gameOverSound.volume = 0.1;
 
         gameOver();
       }

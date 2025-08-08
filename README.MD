@@ -85,7 +85,46 @@ Contain:
 
       this.isGround = true; 
       this.canPassThroughRings = true; 
-    }`
+    }
+
+    ``METHODS``
+      gravityEffect() {
+ 
+    let offset = 55;
+    if (this.y + this.height + this.gravitySpeed > gameBoxNode.offsetHeight - offset) {
+      this.isGround = true;
+      return;
+    }
+    this.y += this.gravitySpeed;
+    this.node.style.top = `${this.y}px`;
+  }
+
+  jump() {
+    if (this.isGround) {
+      console.log(this.y);
+      this.y -= this.jumpSpeed;
+      this.node.style.top = `${this.y}px`;
+
+      this.isGround = false;
+    }
+    jumpSound.play();
+  }
+
+  dogMovement(direction) {
+    if (direction === "right") {
+      if (this.x + this.width + this.speed > gameBoxNode.offsetWidth) {
+        return;
+      }
+      this.x += this.speed;
+    } else if (direction === "left") {
+      if (this.x - this.speed < 0) {
+        return;
+      }
+      this.x -= this.speed;
+    }
+    this.node.style.left = `${this.x}px`;
+  }
+}`
 
 ## obstacle.js 
 - Obstacles properties were created here in order to add obstacles to the main.js

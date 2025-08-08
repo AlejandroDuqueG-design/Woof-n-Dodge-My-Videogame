@@ -1,7 +1,6 @@
 //SAME PROCESS AS WITH THE DOG CLASS
 class Obstacle {
   constructor(type, xPos, yPos) {
-
     // 🧪PROPERTIES of any obstacle (NODE) we will create
     this.node = document.createElement("img");
     this.node.className = "obstacle";
@@ -15,7 +14,7 @@ class Obstacle {
     } else if (this.type === "ring") {
       this.node.src = "./images/ring.png";
       this.height = 90;
-      this.width = 30;
+      this.width = 90;
     }
 
     gameBoxNode.append(this.node); //Appending the node to the game box

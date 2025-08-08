@@ -1,6 +1,6 @@
-// - ※GLOBAL DOM ELEMENTS
+// - ※ELEMENTOS GLOBALES DEL DOM
 
-// • Screens Variables!/
+// • Variables de las pantallas!/
 // Game Start Screen
 const startScreenNode = document.querySelector("#start-screen"); //Pantalla de Inicio;
 // Game Screen Background
@@ -8,17 +8,17 @@ const gameScreenNode = document.querySelector("#game-screen"); //Pantalla de jue
 //Game Over
 const gameOverScreenNode = document.querySelector("#game-over-screen"); //Pantalla GameOver
 
-// • Buttons/
+// • Botones/
 const startBtnNode = document.querySelector("#start-btn");
 const playAgainBtnNode = document.querySelector("#play-again-btn");
 
-// • Game Box/
+// • Game Box - Juego, contenedor/
 const gameBoxNode = document.querySelector("#game-box"); //Contenedor para elementos del juego
 const scoreDisplay = document.querySelector("#score-display");
 
-// - ※ GLOBAL GAME VARIABLES
+// - ※ VARIABLES GLOBALES
 
-let dogObj; //Esta variable comienza vacia, solo se le asigna valor cuando comienza el juego
+let dogObj; //Esta variable comienza vacia, solo se le asigna valor cuando comienza el juego y se pone a el perro en el juego
 //let obstacleObj;
 let obstacleArr = [];
 
@@ -39,7 +39,8 @@ const gameOverSound = new Audio("sounds/gameoversound.mp3");
 const backgroundMusic = new Audio("sounds/backgroundmusic.mp3");
 const gotRewardSound = new Audio("sounds/gettingrewardsound.mp3");
 
-// - ※ GLOBAL GAME FUNCTIONS
+// - ※ FUNCIONES GLOBALES DEL JUEGO
+//START GAME
 function startGame() {
   //1. Ocultar pantalla de Inicio
   startScreenNode.style.display = "none";
@@ -97,24 +98,23 @@ function spawnObstacle() {
 
     // 2. X va a ser la misma para ambos obstacles
   }
-
-  //console.log(obstacleArr);
 }
 
 function checkDespawnObstacle() {
   if (obstacleArr[0] && obstacleArr[0].x < 0 - obstacleArr[0].width) {
-    /*Destroy the obstacles once they have pass the left screen border and disappear 
-    To remove elements from the game we need to consider both enviroments, 
-     1.first from the DOM */
+    /*Destruir los obstaculos una vez que pasan el borde izquiero de la pantalla y desaparecen.
+    Para remover elementos del juego, necesitamos tener en cuenta los dos ambientes en los que se configura el juego 
+     1.El DOM (Removiendo el Nodo)*/
     obstacleArr[0].node.remove();
-    //2. from the code
-    obstacleArr.splice(0, 1); //or shift can also be used here, if it is always to remove the first element
+    //2. Del código, in JS
+    obstacleArr.splice(0, 1); //También se puede usar el metodo shift, siempre que sea para remover el primer elemento
   } else if (rewardArr[0] && rewardArr[0].x < 0) {
     rewardArr[0].node.remove();
     rewardArr.splice(0, 1);
   }
 }
 
+//GAME LOOP
 function gameLoop() {
   //count++;
   dogObj.gravityEffect();
@@ -143,6 +143,7 @@ function handleKeyboardEvent(event) {
   }
 }
 
+//GAME OVER
 function gameOver() {
   //Inside this function we need:
 
@@ -173,6 +174,7 @@ function gameOver() {
   backgroundMusic.currentTime = 0;
 }
 
+//RESTART GAME
 function restartGame() {
   // 1. Hide Game Over screen
   gameOverScreenNode.style.display = "none";
@@ -184,12 +186,11 @@ function restartGame() {
 }
 
 function checkCollisionDogObstacle() {
-  //We need to first iterate over the arr
+  //Es necesario iterar sobre cada elemento del arr.
   obstacleArr.forEach((eachObstacleObj) => {
     let isColliding = checkCollision(dogObj, eachObstacleObj);
     if (isColliding) {
       if (eachObstacleObj.type === "dogcatcher") {
-        //Adding sounds to the dogcatcher obstacle
         collisionSound.play();
         gameOverSound.play();
 
@@ -197,13 +198,6 @@ function checkCollisionDogObstacle() {
       }
     }
   });
-  // if (checkCollision(dogObj, reward)) {
-  //   gotRewardSound.play(); // sonido al recoger carne
-  //   reward.remove();       // eliminar del DOM
-  //   rewardArr.splice(index, 1); // eliminar del array
-  //   lifeCounter++;         // aumentar vidas o puntos
-  //   console.log("¡Carne recolectada! Vidas:", lifeCounter);
-  // }
 }
 
 //FUNCIÓN PARA PONER UN CONTADOR DE PUNTOS
@@ -217,17 +211,17 @@ function checkCollisionDogReward() {
     let areColliding = checkCollision(dogObj, eachRewardElement);
     //console.log ("Revisando colisión")
     if (areColliding) {
+      score++; // aumentar puntos cuando se come la carne
+      eachRewardElement.node.remove(); // eliminar el nodo del DOM
+      rewardArr.splice(index, 1); // eliminar del array en JS
       gotRewardSound.play(); // sonido al recoger carne
-      eachRewardElement.node.remove(); // eliminar del DOM
-      rewardArr.splice(index, 1); // eliminar del array
-      score++; // aumentar vidas o puntos
-      updateScoreDisplay();
+      updateScoreDisplay(); // actualizar el score cuando se come la carne
     }
   });
 }
 
 function checkCollision(element1, element2) {
-  //To reduce elements padding and make the collision smoother
+  //Para intentar reducir el padding de los elemntos y que la colisión no parezca que se da cuando aun los elementos están distanciados uno de otro
   const dx = element1.x + element1.width / 2 - (element2.x + element2.width / 2);
   const dy = element1.y + element1.height / 2 - (element2.y + element2.height / 2);
   const distance = Math.sqrt(dx * dx + dy * dy);
@@ -236,20 +230,6 @@ function checkCollision(element1, element2) {
 
   return distance < collisionDistance;
 }
-
-/*function checkCollision(element1, element2) {
-  if (
-    // Axis-Aligned Bounding Boxes (AABBs) Mathematic comprobation very typical for this kind of cases
-    element1.x < element2.x + element2.width &&
-    element1.x + element1.width > element2.x &&
-    element1.y < element2.y + element2.height &&
-    element1.y + element1.height > element2.y
-  ) {
-    return true;
-  } else {
-    return false;
-  }
-}*/
 
 function checkCollisionWithTopBottomZones(element1, element2, topPercent, bottomPercent) {
   const topZoneHeight = element2.height * topPercent;
@@ -288,32 +268,3 @@ playAgainBtnNode.addEventListener("click", restartGame);
 
 //Keydown = Any key in the keyboard
 document.addEventListener("keydown", handleKeyboardEvent);
-
-/* Planning of the Game in JS (Different} Elements, their properties and the actions they will make)
-Game ovweview: A street dog 🐶 needs to avoid obstacles that are spawing while he runs trough the city.
-The dog will also find randomly food rewards 🥩🍗🍖 that can help him to stay healthy and get some "inmuinity" while he sort out the obstacles.
-In some of this obstacles there are also food rewards.
-
-ACTIONS - Game Loop 
-a. Dog movement, always in X coordinate (horizontal, right) (Example: T-Rex Chrome Dino Game)
-b. Obstacles 💀 move the opossite way (X, horizontal, left), at a different speed and at different levels in Y coordinate
-
-1. For the Dog 🐶
-   - Position Coordinatess x, y, h (height), w (width), speed (SpeedGravity, and speedJump) ✅
-   - Action: Jump ✅
-   - Gravity ✅
-   
-2. For the Obstacles 💀 
-   -  Position Coordinatess x, y, h (height), w (width), speed. ✅
-   - Action (Automatic movement ← ) ✅
-
-3. Spawn the Obstacles and unSpawn the Obstacles  ✅ 
-   
-4. Collision between Dog and Obstacles   ✅
-
-5. Game Over (Specialized Function, because maybe the "game over" can be trigger by other facts beside the collision with the obstacles) ✅
-
-BONUS
-6. Life counter
-7. Reward / Inmunity - Recover system
-*/

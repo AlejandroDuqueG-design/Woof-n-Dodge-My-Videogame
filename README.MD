@@ -60,7 +60,7 @@ Contain:
 ### dog.js
 - Here are the dog properties that let create the doig inside the main.js
 
-``class Dog {
+`class Dog {
     constructor() {
       this.node = document.createElement("img"); 
       this.node.className = "dog"; 
@@ -85,7 +85,7 @@ Contain:
 
       this.isGround = true; 
       this.canPassThroughRings = true; 
-    }``
+    }`
 
 ## obstacle.js 
 - Obstacles properties were created here in order to add obstacles to the main.js

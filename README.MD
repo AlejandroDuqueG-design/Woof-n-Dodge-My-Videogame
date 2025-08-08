@@ -60,31 +60,32 @@ Contain:
 ### dog.js
 - Here are the dog properties that let create the doig inside the main.js
 
-    class Dog {
+``class Dog {
     constructor() {
-    this.node = document.createElement("img"); 
-    this.node.className = "dog"; 
-    this.node.src = "./images/dogrunning.gif"; index HTML
+      this.node = document.createElement("img"); 
+      this.node.className = "dog"; 
+      this.node.src = "./images/dogrunning.gif"; index HTML
 
     gameBoxNode.append(this.node); 
 
-    this.x = 80;
-    this.y = 300;
-    this.height = 45;
-    this.width = 75;
-    this.gravitySpeed = 2;
-    this.jumpSpeed = 160;
-    this.speed = 80;
+      this.x = 80;
+      this.y = 300;
+      this.height = 45;
+      this.width = 75;
+      this.gravitySpeed = 2;
+      this.jumpSpeed = 160;
+      this.speed = 80;
 
-    this.node.style.width = `${this.width}px`;
-    this.node.style.height = `${this.height}px`;
+      this.node.style.width = `${this.width}px`;
+      this.node.style.height = `${this.height}px`;
 
-    this.node.style.position = "absolute";
-    this.node.style.top = `${this.y}px`;
-    this.node.style.left = `${this.x}px`;
+      this.node.style.position = "absolute";
+      this.node.style.top = `${this.y}px`;
+      this.node.style.left = `${this.x}px`;
 
-    this.isGround = true; //The Dog is in the ground
-    this.canPassThroughRings = true; //The dog can go through the rings
+      this.isGround = true; 
+      this.canPassThroughRings = true; 
+    }``
 
 ## obstacle.js 
 - Obstacles properties were created here in order to add obstacles to the main.js
@@ -116,7 +117,9 @@ Contain:
     this.node.style.position = "absolute";
     this.node.style.top = `${this.y}px`;
     this.node.style.left = `${this.x}px`;
-  }
+  }``
+
+
 
 ## reward.js 
 - Was created as a class as well and contain all the properties that allow to add rewards in the main.js file.

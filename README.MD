@@ -89,8 +89,8 @@ Contain:
     }
     ```
 
-## obstacle.js 
-- Obstacles properties were created here in order to add obstacles to the main.js
+``## obstacle.js 
+- Obstacles properties were created here in order to add obstacles to the main.js``
 
 ```
     class Obstacle {
@@ -125,8 +125,8 @@ Contain:
   ```
 
 
-## reward.js 
-- Was created as a class as well and contain all the properties that allow to add rewards in the main.js file.
+``## reward.js 
+- Was created as a class as well and contain all the properties that allow to add rewards in the main.js file.``
 
     ```
     class Reward {

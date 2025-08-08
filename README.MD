@@ -33,7 +33,7 @@ A street **dog** runs the city looking for **food** while a an **animal control 
 - Figma.
 
 # States
-.
+
 - *Start Game Screen* with video game name logo and **"Start" Button**.
 - *Game box Screen*, where the game actually happens, with a **background** image, **the dog** (main character), **the obstacles**, **rewards** and **score counter**.
 
@@ -86,7 +86,8 @@ Contain:
       this.isGround = true; 
       this.canPassThroughRings = true; 
     }
-    }```
+    }
+    ```
 
 ## obstacle.js 
 - Obstacles properties were created here in order to add obstacles to the main.js
@@ -122,7 +123,6 @@ Contain:
   }
   }
   ```
-
 
 
 ## reward.js 

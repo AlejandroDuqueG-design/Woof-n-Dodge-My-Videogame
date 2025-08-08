@@ -60,8 +60,8 @@ Contain:
 ### dog.js
 - Here are the dog properties that let create the doig inside the main.js
 
-`class Dog {
-    constructor() {
+    ```class Dog {
+      constructor() {
       this.node = document.createElement("img"); 
       this.node.className = "dog"; 
       this.node.src = "./images/dogrunning.gif"; index HTML
@@ -86,55 +86,17 @@ Contain:
       this.isGround = true; 
       this.canPassThroughRings = true; 
     }
-
-    ``METHODS``
-      gravityEffect() {
- 
-    let offset = 55;
-    if (this.y + this.height + this.gravitySpeed > gameBoxNode.offsetHeight - offset) {
-      this.isGround = true;
-      return;
-    }
-    this.y += this.gravitySpeed;
-    this.node.style.top = `${this.y}px`;
-  }
-
-  jump() {
-    if (this.isGround) {
-      console.log(this.y);
-      this.y -= this.jumpSpeed;
-      this.node.style.top = `${this.y}px`;
-
-      this.isGround = false;
-    }
-    jumpSound.play();
-  }
-
-  dogMovement(direction) {
-    if (direction === "right") {
-      if (this.x + this.width + this.speed > gameBoxNode.offsetWidth) {
-        return;
-      }
-      this.x += this.speed;
-    } else if (direction === "left") {
-      if (this.x - this.speed < 0) {
-        return;
-      }
-      this.x -= this.speed;
-    }
-    this.node.style.left = `${this.x}px`;
-  }
-}`
+    }```
 
 ## obstacle.js 
 - Obstacles properties were created here in order to add obstacles to the main.js
 
-    class Obstacle {
-    constructor(type, xPos, yPos) {
-    this.node = document.createElement("img");
-    this.node.className = "obstacle";
-    this.type = type;
-    if (this.type === "dogcatcher") {
+    ```class Obstacle {
+     constructor(type, xPos, yPos) {
+     this.node = document.createElement("img");
+     this.node.className = "obstacle";
+     this.type = type;
+     if (this.type === "dogcatcher") {
       this.node.src = "./images/dogcatcher.gif";
       this.height = 90;
       this.width = 90;
@@ -156,14 +118,15 @@ Contain:
     this.node.style.position = "absolute";
     this.node.style.top = `${this.y}px`;
     this.node.style.left = `${this.x}px`;
-  }``
+  }
+  }```
 
 
 
 ## reward.js 
 - Was created as a class as well and contain all the properties that allow to add rewards in the main.js file.
 
-    class Reward {
+    ```class Reward {
     constructor(type, xPos, yPos) {
     this.node = document.createElement("img"); 
     this.node.className = "reward";
@@ -190,8 +153,8 @@ Contain:
     this.node.style.position = "absolute";
     this.node.style.top = `${this.y}px`;
     this.node.style.left = `${this.x}px`;
-
   }
+  }```
 
 # Extra Links 
 

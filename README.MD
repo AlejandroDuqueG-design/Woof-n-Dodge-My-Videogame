@@ -48,20 +48,20 @@ Contain:
  - Global Variables.
  - Sounds.
  - Global Functions.
-   > startGame() 
-   > gameLoop()
-   > checkCollisionDogObstacle()
-   > updateScoreDisplay()
-   > gameOver()
-   > restartGame()
+   - startGame() 
+   - gameLoop()
+   - checkCollisionDogObstacle()
+   - updateScoreDisplay()
+   - gameOver()
+   - restartGame()
  - Event Listeners  
 
 
 ### dog.js
 - Here are the dog properties that let create the doig inside the main.js
 
-class Dog {
-  constructor() {
+    class Dog {
+    constructor() {
     this.node = document.createElement("img"); 
     this.node.className = "dog"; 
     this.node.src = "./images/dogrunning.gif"; index HTML
@@ -89,8 +89,8 @@ class Dog {
 ## obstacle.js 
 - Obstacles properties were created here in order to add obstacles to the main.js
 
-class Obstacle {
-  constructor(type, xPos, yPos) {
+    class Obstacle {
+    constructor(type, xPos, yPos) {
     this.node = document.createElement("img");
     this.node.className = "obstacle";
     this.type = type;
@@ -121,8 +121,8 @@ class Obstacle {
 ## reward.js 
 - Was created as a class as well and contain all the properties that allow to add rewards in the main.js file.
 
-class Reward {
-  constructor(type, xPos, yPos) {
+    class Reward {
+    constructor(type, xPos, yPos) {
     this.node = document.createElement("img"); 
     this.node.className = "reward";
     this.type = type;
